@@ -1,6 +1,6 @@
 zoxide_VERSION=$1
 BUILD_VERSION=$2
-declare -a arr=("jammy" "noble")
+declare -a arr=("jammy" "noble" "questing")
 for i in "${arr[@]}"
 do
   UBUNTU_DIST=$i
