@@ -1,0 +1,16 @@
+Source: zoxide
+Section: utils
+Priority: optional
+Maintainer: Dario Griffo <dariogriffo@gmail.com>
+Build-Depends: debhelper-compat (= 13), cargo, rustc
+Standards-Version: 4.6.2
+Homepage: https://github.com/ajeetdsouza/zoxide
+Rules-Requires-Root: no
+
+Package: zoxide
+Architecture: amd64
+Depends: ${misc:Depends}
+Description: A smarter cd command, inspired by z and autojump
+ zoxide is a smarter cd command, inspired by z and autojump. It remembers which
+ directories you use most frequently, so you can "jump" to them in just a few
+ keystrokes.
