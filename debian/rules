@@ -1,4 +1,6 @@
 #!/usr/bin/make -f
+DEB_HOST_ARCH ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
+ZOXIDE_VERSION := $(shell dpkg-parsechangelog -S Version | sed 's/[-~].*//')
 
 %:
 	dh $@
@@ -6,12 +8,35 @@
 override_dh_auto_configure:
 
 override_dh_auto_build:
-	cargo build --release
+	@arch="$(DEB_HOST_ARCH)"; \
+	case "$$arch" in \
+		amd64)   ZOXIDE_RELEASE="zoxide-$(ZOXIDE_VERSION)-x86_64-unknown-linux-musl" ;; \
+		arm64)   ZOXIDE_RELEASE="zoxide-$(ZOXIDE_VERSION)-aarch64-unknown-linux-musl" ;; \
+		armel)   ZOXIDE_RELEASE="zoxide-$(ZOXIDE_VERSION)-arm-unknown-linux-musleabihf" ;; \
+		armhf)   ZOXIDE_RELEASE="zoxide-$(ZOXIDE_VERSION)-armv7-unknown-linux-musleabihf" ;; \
+		riscv64) ZOXIDE_RELEASE="zoxide-$(ZOXIDE_VERSION)-riscv64gc-unknown-linux-musl" ;; \
+		i386)    ZOXIDE_RELEASE="zoxide-$(ZOXIDE_VERSION)-i686-unknown-linux-musl" ;; \
+		*) echo "Unsupported architecture: $$arch"; exit 1 ;; \
+	esac; \
+	echo "Downloading $$ZOXIDE_RELEASE for $(ZOXIDE_VERSION)..."; \
+	wget -q "https://github.com/ajeetdsouza/zoxide/releases/download/v$(ZOXIDE_VERSION)/$$ZOXIDE_RELEASE.tar.gz"; \
+	mkdir -p "$$ZOXIDE_RELEASE"; \
+	tar -xf "$$ZOXIDE_RELEASE.tar.gz" -C "$$ZOXIDE_RELEASE"; \
+	rm -f "$$ZOXIDE_RELEASE.tar.gz"; \
+	echo "$$ZOXIDE_RELEASE" > .zoxide_release_name
 
 override_dh_auto_install:
-	install -D -m 755 target/release/zoxide debian/zoxide/usr/bin/zoxide
+	@ZOXIDE_RELEASE=$$(cat .zoxide_release_name); \
+	install -D -m 755 "$$ZOXIDE_RELEASE/zoxide" debian/zoxide/usr/bin/zoxide
 
 override_dh_auto_test:
 
 override_dh_auto_clean:
-	cargo clean || true
+	@if [ -f .zoxide_release_name ]; then \
+		ZOXIDE_RELEASE=$$(cat .zoxide_release_name); \
+		rm -rf "$$ZOXIDE_RELEASE" .zoxide_release_name || true; \
+	fi
+
+override_dh_strip:
+
+override_dh_shlibdeps:

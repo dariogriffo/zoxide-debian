@@ -57,7 +57,7 @@ EOF
 
 echo ""
 echo "Building Debian source packages..."
-DEBIAN_DISTS=("bookworm")
+DEBIAN_DISTS=("bookworm" "trixie" "forky" "sid")
 for dist in "${DEBIAN_DISTS[@]}"; do
     build_source_package "$dist"
 done

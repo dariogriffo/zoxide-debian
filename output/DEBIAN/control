@@ -5,6 +5,6 @@ Maintainer: Dario Griffo <dariogriffo@gmail.com>
 Homepage: https://github.com/ajeetdsouza/zoxide
 Package: zoxide
 Version: zoxide_VERSION-BUILD_VERSION+DIST
-Architecture: amd64
+Architecture: SUPPORTED_ARCHITECTURES
 Depends: 
 Description: a smarter cd command, inspired by z and autojump.
