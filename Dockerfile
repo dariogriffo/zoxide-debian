@@ -10,9 +10,18 @@ ARG ZOXIDE_RELEASE
 
 RUN mkdir -p /output/usr/bin
 RUN mkdir -p /output/usr/share/doc/zoxide
+RUN mkdir -p /output/usr/share/man/man1
+RUN mkdir -p /output/usr/share/bash-completion/completions
+RUN mkdir -p /output/usr/share/fish/vendor_completions.d
+RUN mkdir -p /output/usr/share/zsh/vendor-completions
 RUN mkdir -p /output/DEBIAN
 
 COPY ${ZOXIDE_RELEASE}/zoxide /output/usr/bin/
+COPY ${ZOXIDE_RELEASE}/man/man1/ /output/usr/share/man/man1/
+COPY ${ZOXIDE_RELEASE}/completions/zoxide.bash /output/usr/share/bash-completion/completions/zoxide
+COPY ${ZOXIDE_RELEASE}/completions/zoxide.fish /output/usr/share/fish/vendor_completions.d/
+COPY ${ZOXIDE_RELEASE}/completions/_zoxide /output/usr/share/zsh/vendor-completions/
+RUN gzip -9n /output/usr/share/man/man1/*.1
 COPY output/DEBIAN/control /output/DEBIAN/
 COPY output/copyright /output/usr/share/doc/zoxide/
 COPY output/changelog.Debian /output/usr/share/doc/zoxide/

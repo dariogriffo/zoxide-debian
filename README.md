@@ -19,10 +19,28 @@
 This repository contains build scripts to produce the _unofficial_ Debian packages
 (.deb) for [zoxide](https://github.com/ajeetdsouza/zoxide/) hosted at [debian.griffo.io](https://debian.griffo.io)
 
-Currently supported debian distros are:
-- Bookworm
-- Trixie
-- Sid
+Currently supported Debian distros are:
+- Bookworm (v12)
+- Trixie (v13)
+- Forky (v14)
+- Sid (testing)
+
+Currently supported Ubuntu distros are:
+- Jammy (22.04)
+- Noble (24.04)
+- Questing (25.10)
+- Resolute (26.04)
+
+Supported architectures:
+- amd64 (x86_64) - All distributions
+- arm64 (aarch64) - All distributions
+- armel (ARM EABI) - Debian only
+- armhf (ARM hard float) - All distributions
+- i386 (x86 32-bit) - Debian only
+- riscv64 (RISC-V 64-bit) - Trixie, Forky, Sid, Noble and later
+
+The packages include the zoxide binary, man pages and shell completions for
+bash, fish and zsh.
 
 This is an unofficial community project to provide a package that's easy to
 install on Debian. If you're looking for the zoxide source code, see
@@ -51,10 +69,25 @@ sudo dpkg -i <filename>.deb
 
 To update to a new version, just follow any of the installation methods above. There's no need to uninstall the old version; it will be updated correctly.
 
+## Building
+
+### Build for single architecture
+```sh
+./build.sh <zoxide_version> <build_version> <architecture>
+# Example: ./build.sh 0.10.0 1 arm64
+```
+
+### Build for all architectures
+```sh
+./build.sh <zoxide_version> <build_version> all
+# Example: ./build.sh 0.10.0 1 all
+```
+
 ## Roadmap
 
 - [x] Produce a .deb package on GitHub Releases
 - [x] Set up a debian mirror for easier updates
+- [x] Multi-architecture support (amd64, arm64, armel, armhf, riscv64, i386)
 
 ## Disclaimer
 

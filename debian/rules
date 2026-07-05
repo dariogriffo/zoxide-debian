@@ -27,7 +27,12 @@ override_dh_auto_build:
 
 override_dh_auto_install:
 	@ZOXIDE_RELEASE=$$(cat .zoxide_release_name); \
-	install -D -m 755 "$$ZOXIDE_RELEASE/zoxide" debian/zoxide/usr/bin/zoxide
+	install -D -m 755 "$$ZOXIDE_RELEASE/zoxide" debian/zoxide/usr/bin/zoxide; \
+	mkdir -p debian/zoxide/usr/share/man/man1; \
+	install -m 644 "$$ZOXIDE_RELEASE"/man/man1/*.1 debian/zoxide/usr/share/man/man1/; \
+	install -D -m 644 "$$ZOXIDE_RELEASE/completions/zoxide.bash" debian/zoxide/usr/share/bash-completion/completions/zoxide; \
+	install -D -m 644 "$$ZOXIDE_RELEASE/completions/zoxide.fish" debian/zoxide/usr/share/fish/vendor_completions.d/zoxide.fish; \
+	install -D -m 644 "$$ZOXIDE_RELEASE/completions/_zoxide" debian/zoxide/usr/share/zsh/vendor-completions/_zoxide
 
 override_dh_auto_test:
 
