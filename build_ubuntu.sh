@@ -74,7 +74,7 @@ build_architecture() {
     fi
 
     for dist in "${arr[@]}"; do
-        FULL_VERSION="$zoxide_VERSION-${BUILD_VERSION}+${dist}_${build_arch}_ubu"
+        FULL_VERSION="$zoxide_VERSION-${BUILD_VERSION}~${dist}_${build_arch}_ubu"
         echo "  Building $FULL_VERSION"
 
         if ! docker build . -f Dockerfile.ubu -t "zoxide-ubuntu-$dist-$build_arch" \
