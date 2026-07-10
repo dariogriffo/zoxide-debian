@@ -23,6 +23,8 @@ COPY ${ZOXIDE_RELEASE}/completions/zoxide.fish /output/usr/share/fish/vendor_com
 COPY ${ZOXIDE_RELEASE}/completions/_zoxide /output/usr/share/zsh/vendor-completions/
 RUN gzip -9n /output/usr/share/man/man1/*.1
 COPY output/DEBIAN/control /output/DEBIAN/
+COPY output/DEBIAN/postinst /output/DEBIAN/postinst
+RUN chmod 755 /output/DEBIAN/postinst
 COPY output/copyright /output/usr/share/doc/zoxide/
 COPY output/changelog.Debian /output/usr/share/doc/zoxide/
 COPY output/README.md /output/usr/share/doc/zoxide/
