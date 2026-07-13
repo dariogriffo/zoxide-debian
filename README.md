@@ -48,6 +48,8 @@ install on Debian. If you're looking for the zoxide source code, see
 
 ## Install/Update
 
+📖 **Step-by-step install guide:** [Debian](https://debian.griffo.io/install-latest-zoxide-in-debian.html) · [Ubuntu](https://debian.griffo.io/install-latest-zoxide-in-ubuntu.html)
+
 ### The Debian way
 
 ```sh
