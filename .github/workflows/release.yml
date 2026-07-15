@@ -23,6 +23,11 @@ jobs:
       - name: Checkout zoxide-debian
         uses: actions/checkout@v4
 
+      - name: Validate upstream license permits paid distribution
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: ./validate_license.sh ${{ inputs.zoxide_version }}
+
       - name: Build zoxide
         run: ./build.sh ${{ inputs.zoxide_version }} ${{ inputs.build_version }}
 
