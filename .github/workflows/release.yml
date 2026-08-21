@@ -11,6 +11,18 @@ on:
         description: The build version.
         type: string
         required: true
+      architecture:
+        description: Architecture to build (amd64, arm64, armel, armhf, riscv64, i386, or 'all' for all architectures)
+        type: choice
+        default: 'all'
+        options:
+          - 'all'
+          - 'amd64'
+          - 'arm64'
+          - 'armel'
+          - 'armhf'
+          - 'riscv64'
+          - 'i386'
 
 permissions:
   contents: write
@@ -29,7 +41,7 @@ jobs:
         run: ./validate_license.sh ${{ inputs.zoxide_version }}
 
       - name: Build zoxide
-        run: ./build.sh ${{ inputs.zoxide_version }} ${{ inputs.build_version }}
+        run: ./build.sh ${{ inputs.zoxide_version }} ${{ inputs.build_version }} ${{ inputs.architecture }}
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
